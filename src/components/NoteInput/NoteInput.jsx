@@ -1,0 +1,1 @@
+// NoteInput component
