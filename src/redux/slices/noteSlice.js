@@ -13,6 +13,25 @@ export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
   const res = await axiosClient.get("/api/notes");
   return res.data;
 });
+export const deleteNote = createAsyncThunk(
+  "notes/deleteNote",
+  async (noteId) => {
+    await axiosClient.delete(`/api/notes/${noteId}`);
+  }
+);
+export const editNote = createAsyncThunk(
+  "notes/editNote",
+  async ({ noteId, updatedData }, { getState }) => {
+    const note = getState().notes.notes.find((note) => note.id === noteId);
+    if (!note) return;
+
+    const res = await axiosClient.patch(`/api/notes/${noteId}`, {
+      ...updatedData,
+    });
+    console.log(res.data);
+    return res.data;
+  }
+);
 const noteSlice = createSlice({
   name: "notes",
   initialState: {
@@ -49,6 +68,40 @@ const noteSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchNotes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      // Delete Note reducers
+      .addCase(deleteNote.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteNote.fulfilled, (state, action) => {
+        state.notes = state.notes.filter((note) => note.id !== action.meta.arg);
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteNote.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      // Edit Note reducers
+      .addCase(editNote.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(editNote.fulfilled, (state, action) => {
+        state.loading = false;
+        const noteId = action.payload.id;
+        const index = state.notes.findIndex((note) => note.id === noteId);
+        // Update the note in the state
+        if (index !== -1) {
+          state.notes[index] = action.payload;
+        }
+
+        state.error = null;
+      })
+      .addCase(editNote.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

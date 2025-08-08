@@ -4,6 +4,7 @@ import "./App.css";
 import Login from "./screens/Login/Login.jsx";
 import Register from "./screens/Register/Register.jsx";
 import Notes from "./screens/Notes/Notes.jsx";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute.jsx";
 function App() {
   return (
     <Router>
@@ -11,7 +12,10 @@ function App() {
         <Route path="/" element={<Home />} />;
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/notes" element={<Notes />} />
+        <Route
+          path="/notes"
+          element={<ProtectedRoute>{<Notes />}</ProtectedRoute>}
+        />
       </Routes>
     </Router>
   );

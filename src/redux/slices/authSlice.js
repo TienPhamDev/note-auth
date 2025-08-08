@@ -53,7 +53,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.token = action.payload; // Store access token
         // state.user = action.payload.email; // Store user email
-        // console.log(state.user);
+        console.log(state.token);
         state.loading = false;
         state.error = null;
       })
@@ -79,5 +79,5 @@ const authSlice = createSlice({
       });
   },
 });
-// export const { logout } = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

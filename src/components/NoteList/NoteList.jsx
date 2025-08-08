@@ -2,6 +2,7 @@
 import React from "react";
 import { fetchNotes } from "../../redux/slices/noteSlice";
 import { useDispatch, useSelector } from "react-redux";
+import NoteItem from "../NoteItem/NoteItem";
 
 const NoteList = () => {
   const dispatch = useDispatch();
@@ -34,12 +35,7 @@ const NoteList = () => {
     <div>
       <h1>Note List</h1>
       {notes && notes.length > 0 ? (
-        notes.map((note) => (
-          <div key={note.id}>
-            <h2>{note.title}</h2>
-            <p>{note.content}</p>
-          </div>
-        ))
+        notes.map((note) => <NoteItem key={note.id} note={note} />)
       ) : (
         <p>No notes found. Add your first note!</p>
       )}

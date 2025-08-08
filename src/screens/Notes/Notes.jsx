@@ -2,7 +2,7 @@
 import React from "react";
 import NoteInput from "../../components/NoteInput/NoteInput";
 import NoteList from "../../components/NoteList/NoteList";
-// import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
 
 const Notes = () => {
   return (
@@ -10,7 +10,7 @@ const Notes = () => {
       <h1>Notes</h1>
       <NoteInput />
       <NoteList />
-      {/* <LogoutButton /> */}
+      <LogoutButton />
     </div>
   );
 };
