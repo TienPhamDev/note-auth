@@ -11,19 +11,16 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     try {
       // Dispatch login with correct object format
-      const result = await dispatch(
-        login({ email: email, password: password })
-      ).unwrap();
+      dispatch(login({ email: email, password: password }));
 
       // Navigate only if login is successful
-      if (result) {
-        navigate("/notes");
-      }
+
+      navigate("/notes");
     } catch (error) {
       console.log("Login failed:", error);
       // Error is already handled by Redux state
